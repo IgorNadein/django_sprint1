@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+  {% block title %}
+    {{ post.location }}. {{ post.date }}
+  {% endblock %}
+  {% block content %}
+    <article>
+      {% include 'blog/includes/one_post.html' %}        
+      <p>
+        {{ post.text|linebreaks }}
+      </p>          
+    </article>                
+  {% endblock %}
+
