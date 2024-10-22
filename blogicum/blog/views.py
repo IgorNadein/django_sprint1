@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.http import Http404
+
 
 posts = [
     {
@@ -53,13 +55,18 @@ def index(request):
 
 def post_detail(request, id):
     template = 'blog/detail.html'
-    context = {'post': posts[id]}
+    for post in posts:
+        if post['id'] == id:
+            context = {'post': post}
+            break
+    else:
+        raise Http404('Страница не найдена')
     return render(request, template, context)
 
 
 def category_posts(request, category_slug):
     posts_slug = [
-        slug for slug in posts if slug['category'] == str(category_slug)
+        slug for slug in posts if slug['category'] == category_slug
     ]
     template = 'blog/category.html'
     context = {
